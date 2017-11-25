@@ -19,23 +19,32 @@ public class Currency {
         this.code = code;
     }
 
+    public Currency(String currencyName, int converter, String code, double rateOfExchange, double purchaseRate, double sellRate) {
+        this.currencyName = currencyName;
+        this.converter = converter;
+        this.averageRate = rateOfExchange;
+        this.code = code;
+        this.purchaseRate = purchaseRate;
+        this.sellRate = sellRate;
+    }
+
     public String getCurrencyName() {
         return currencyName;
     }
 
-    public int GetConverter() {
+    public int getConverter() {
         return converter;
     }
 
-    public void SetConverter(int converter) {
+    public void setConverter(int converter) {
         this.converter = converter;
     }
 
-    public String GetCode() {
+    public String getCode() {
         return code;
     }
 
-    public double GetRateOfExchange() {
+    public double getAverageRate() {
         return averageRate;
     }
 
@@ -54,6 +63,17 @@ public class Currency {
     public void setSellRate(double sellRate) {
         this.sellRate = sellRate;
     }
+
+    public double getRate(RateType rateType)
+    {
+        if(rateType == RateType.PURCHASE_RATE)
+            return purchaseRate;
+        else if( rateType == RateType.AVERAGE_RATE)
+            return averageRate;
+        else
+            return sellRate;
+    }
+
 
     @Override
     public String toString() {

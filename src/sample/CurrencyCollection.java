@@ -13,27 +13,27 @@ public class CurrencyCollection {
         this.currencyList = new ArrayList<Currency>();
     }
 
-    public void AddElementToCollection(Currency newCurrency)
+    public void addElementToCollection(Currency newCurrency)
     {
         this.currencyList.add(newCurrency);
     }
 
-    public int GetCollectionSize()
+    public int getCollectionSize()
     {
         return this.currencyList.size();
     }
 
-    public Currency GetCollectionElementByPosition(int position)
+    public Currency getCollectionElementByPosition(int position)
     {
         return currencyList.get(position);
     }
 
-    public Currency GetCurrencyElementByCode(String code)
+    public Currency getCurrencyElementByCode(String code)
     {
         Currency result =  null;
         for(int i = 0 ; i < currencyList.size(); ++i)
         {
-            if( currencyList.get(i).GetCode().equals(code))
+            if( currencyList.get(i).getCode().equals(code))
             {
                 result  = currencyList.get(i);
                 break;
@@ -43,19 +43,12 @@ public class CurrencyCollection {
         return result;
     }
 
-    public void ShowCollection()
-    {
-        for(int i = 0; i < currencyList.size(); ++i)
-        {
-            System.out.println(currencyList.get(i).toString());
-        }
-    }
 
-    public void ModifyElementOfColection(String code, double purchaseRate, double sellRate)
+    public void modifyElementOfCollection(String code, double purchaseRate, double sellRate)
     {
         for(int i = 0; i < currencyList.size(); ++i)
         {
-            if(currencyList.get(i).GetCode().equals(code))
+            if(currencyList.get(i).getCode().equals(code))
             {
                 currencyList.get(i).setPurchaseRate(purchaseRate);
                 currencyList.get(i).setSellRate(sellRate);

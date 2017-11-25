@@ -43,7 +43,7 @@ public class ParseXMLDocument{
             temp = temp.replace(",", ".");
             rateOfExchange = parseDouble(temp);
 
-            collection.AddElementToCollection(new Currency(currencyName, converter, code, rateOfExchange));
+            collection.addElementToCollection(new Currency(currencyName, converter, code, rateOfExchange));
         }
     }
 
@@ -71,7 +71,7 @@ public class ParseXMLDocument{
             temp = temp.replace(",", ".");
             sellRate = parseDouble(temp);
 
-            collection.ModifyElementOfColection(code, purchaseRate,sellRate);
+            collection.modifyElementOfCollection(code, purchaseRate,sellRate);
         }
     }
 

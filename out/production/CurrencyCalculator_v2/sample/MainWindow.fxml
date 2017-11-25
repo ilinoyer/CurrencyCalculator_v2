@@ -50,7 +50,7 @@
                               <Insets right="50.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="amount" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER" />
+                        <TextField fx:id="amountField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER" />
                         <Label text="Przelicz z:" GridPane.halignment="RIGHT" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="2" GridPane.vgrow="SOMETIMES">
                            <font>
                               <Font size="18.0" />
@@ -62,7 +62,7 @@
                               <Insets right="50.0" />
                            </padding>
                         </Label>
-                        <ComboBox fx:id="calculateFrom" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="calculateFromBox" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label alignment="TOP_LEFT" text="Przelicz na:" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                            <font>
                               <Font size="18.0" />
@@ -82,8 +82,8 @@
                               <Insets right="50.0" />
                            </padding>
                         </Label>
-                        <ComboBox fx:id="calculateTo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <ComboBox fx:id="calculateBy" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="calculateToBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="calculateByBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <Button fx:id="calculateButton" mnemonicParsing="false" text="Przelicz" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                            <font>
                               <Font size="18.0" />
