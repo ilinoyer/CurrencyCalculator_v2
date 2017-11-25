@@ -63,4 +63,8 @@ public class CurrencyCollection {
             }
         }
     }
+
+    public ArrayList<Currency> getCurrencyList() {
+        return currencyList;
+    }
 }

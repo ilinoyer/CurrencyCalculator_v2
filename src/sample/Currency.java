@@ -54,4 +54,23 @@ public class Currency {
     public void setSellRate(double sellRate) {
         this.sellRate = sellRate;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder toShow = new StringBuilder();
+        toShow.append(code + " - " + currencyName + "\n");
+        toShow.append("Kurs średni: " + averageRate);
+        toShow.append("  Kurs kupna: ");
+        if(purchaseRate != 0)
+            toShow.append(purchaseRate);
+        else
+            toShow.append("nie podano");
+        toShow.append("  Kurs sprzedaży: ");
+        if(sellRate != 0)
+            toShow.append(sellRate);
+        else
+            toShow.append("nie podano");
+
+        return toShow.toString();
+    }
 }

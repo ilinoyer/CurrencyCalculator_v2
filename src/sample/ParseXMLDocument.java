@@ -74,4 +74,8 @@ public class ParseXMLDocument{
             collection.ModifyElementOfColection(code, purchaseRate,sellRate);
         }
     }
+
+    public void setXMLDoc(Document XMLDoc) {
+        this.XMLDoc = XMLDoc;
+    }
 }
