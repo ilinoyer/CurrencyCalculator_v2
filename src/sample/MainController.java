@@ -37,6 +37,15 @@ public class MainController implements Initializable{
     private Button calculateButton;
 
     @FXML
+    private Button genarateChartButton;
+
+    @FXML
+    private ComboBox<String> currencyBox;
+
+    @FXML
+    private ComboBox<String> rateTypeBox;
+
+    @FXML
     private ListView<Currency> overviewList;
     private ObservableList<Currency> currencyObservableList = FXCollections.observableArrayList();
 
@@ -65,12 +74,18 @@ public class MainController implements Initializable{
         {
             calculateFromBox.getItems().add(currencyCollection.getCollectionElementByPosition(i).getCode() +  " - " + currencyCollection.getCollectionElementByPosition(i).getCurrencyName());
             calculateToBox.getItems().add(currencyCollection.getCollectionElementByPosition(i).getCode() + " - " + currencyCollection.getCollectionElementByPosition(i).getCurrencyName());
+            currencyBox .getItems().add(currencyCollection.getCollectionElementByPosition(i).getCode() + " - " + currencyCollection.getCollectionElementByPosition(i).getCurrencyName());
+
         }
         calculateFromBox.setValue(currencyCollection.getCollectionElementByPosition(0).getCode() +  " - " + currencyCollection.getCollectionElementByPosition(0).getCurrencyName());
-        calculateToBox.setValue(currencyCollection.getCollectionElementByPosition(0).getCode() +  " - " + currencyCollection.getCollectionElementByPosition(0).getCurrencyName()); calculateFromBox.setValue(currencyCollection.getCollectionElementByPosition(0).getCode() +  " - " + currencyCollection.getCollectionElementByPosition(0).getCurrencyName());
+        calculateToBox.setValue(currencyCollection.getCollectionElementByPosition(0).getCode() +  " - " + currencyCollection.getCollectionElementByPosition(0).getCurrencyName());
+        currencyBox.setValue(currencyCollection.getCollectionElementByPosition(0).getCode() +  " - " + currencyCollection.getCollectionElementByPosition(0).getCurrencyName());
 
         calculateByBox.getItems().addAll("Kurs średni", "Kurs kupna", "Kurs sprzedaży");
         calculateByBox.setValue("Kurs średni");
+
+        rateTypeBox.getItems().addAll("Kurs średni", "Kurs kupna", "Kurs sprzedaży");
+        rateTypeBox.setValue("Kurs średni");
         }
 
      private RateType checkRateType()
@@ -107,7 +122,7 @@ public class MainController implements Initializable{
                     try {
                         result = calculations.calculateTransaction(currencyFrom, currencyTo, Double.parseDouble(amountField.getText()), rateType);
 
-                        Alert alert = new Alert(Alert.AlertType.NONE, amountField.getText() + " " + calculateFromBox.getValue().substring(0, 3) + "  =  " + result.toString() + " " + calculateToBox.getValue().substring(0, 3), ButtonType.OK);
+                        Alert alert = new Alert(Alert.AlertType.NONE, amountField.getText() + " " + currencyFrom + "  =  " + result.toString() + " " + currencyTo, ButtonType.OK);
                         alert.showAndWait();
 
                         if (alert.getResult() == ButtonType.OK) {
