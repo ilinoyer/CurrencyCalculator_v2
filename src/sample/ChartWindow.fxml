@@ -9,10 +9,10 @@
    <children>
       <LineChart fx:id="currencyChart" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
         <xAxis>
-          <NumberAxis side="BOTTOM" />
+          <NumberAxis fx:id="XAxis" side="BOTTOM" />
         </xAxis>
         <yAxis>
-          <NumberAxis side="LEFT" />
+          <NumberAxis fx:id="YAxis" side="LEFT" />
         </yAxis>
       </LineChart>
    </children>

@@ -3,15 +3,14 @@ package sample;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.ResourceBundle;
-import java.util.Scanner;
+import java.util.*;
 
+import static java.lang.Math.abs;
 import static java.util.Calendar.YEAR;
 
 public class ChartController implements Initializable{
@@ -30,6 +29,12 @@ public class ChartController implements Initializable{
 
     @FXML
     private LineChart<Double, Double> currencyChart;
+
+    @FXML
+    private NumberAxis XAxis;
+
+    @FXML
+    private NumberAxis YAxis;
 
 
     public ChartController(int year, int month, ParseXMLDocument parseXMLDocument, DownloadXML downloadXML, RateType rateType, String currencyCode)
@@ -83,20 +88,23 @@ public class ChartController implements Initializable{
         {
             if(rateType == RateType.AVERAGE_RATE && listOfFiles.get(i).contains("a") && listOfFiles.get(i).contains("z" + tempYear + tempMonth))
             {
+
+                downloadXML.setUrlAddres("http://www.nbp.pl/kursy/xml/" + listOfFiles.get(i) + ".xml");
+                parseXMLDocument.setXMLDoc(downloadXML.GetXMLDocument());
+                dataYList.add(parseXMLDocument.collectDataToCharts(currencyCode, rateType));
+                dataXList.add(Double.parseDouble(listOfFiles.get(i).substring(9,11)));
+
+            }
+            else if((rateType == RateType.PURCHASE_RATE || rateType == RateType.SELL_RATE) && listOfFiles.get(i).contains("c") && listOfFiles.get(i).contains("z" + tempYear + tempMonth))
+            {
                 System.out.println("jeste");
+                System.out.println("http://www.nbp.pl/kursy/xml/" + listOfFiles.get(i) + ".xml");
                 downloadXML.setUrlAddres("http://www.nbp.pl/kursy/xml/" + listOfFiles.get(i) + ".xml");
                 parseXMLDocument.setXMLDoc(downloadXML.GetXMLDocument());
                 dataYList.add(parseXMLDocument.collectDataToCharts(currencyCode, rateType));
                 dataXList.add(Double.parseDouble(listOfFiles.get(i).substring(9,11)));
                 System.out.println(listOfFiles.get(i).substring(4,6) + "    http://www.nbp.pl/kursy/xml/" + listOfFiles.get(i) + ".xml");
 
-            }
-            else if((rateType == RateType.PURCHASE_RATE || rateType == RateType.SELL_RATE) && listOfFiles.get(i).contains("c") && listOfFiles.contains(tempYear + tempMonth))
-            {
-                downloadXML.setUrlAddres("http://www.nbp.pl/kursy/xml/" + listOfFiles.get(i) + ".xml");
-                parseXMLDocument.setXMLDoc(downloadXML.GetXMLDocument());
-                dataYList.add(parseXMLDocument.collectDataToCharts(currencyCode, rateType));
-                dataXList.add(Double.parseDouble(listOfFiles.get(i).substring(9,11)));
             }
         }
     }
@@ -107,21 +115,41 @@ public class ChartController implements Initializable{
         for(int i = 0 ; i < dataXList.size(); ++i)
         {
             series.getData().add(new XYChart.Data<>(dataXList.get(i), dataYList.get(i)));
-            System.out.println("Dodano");
         }
-
+        series.setName("Notowanie z:" + month + "." + year);
         currencyChart.getData().add(series);
+
+        double minYTick = (Collections.max(dataYList) - Collections.min(dataYList)) / 100;
+        YAxis.setAutoRanging(false);
+        YAxis.setLowerBound(Collections.min(dataYList) - minYTick );
+        YAxis.setUpperBound(Collections.max(dataYList) + minYTick);
+        YAxis.setTickUnit(minYTick);
+        YAxis.setLabel("Wartość w zł");
+
+
+        XAxis.setAutoRanging(false);
+        XAxis.setUpperBound(31);
+        XAxis.setLowerBound(0);
+        XAxis.setTickUnit(1);
+        XAxis.setLabel("Dzień miesiąca");
+
+        String title= "";
+        if(rateType == RateType.AVERAGE_RATE)
+            title += "Kurs średni ";
+        else if(rateType == RateType.SELL_RATE)
+            title += "Kurs sprzedaży ";
+        else if(rateType == RateType.PURCHASE_RATE)
+            title += "Kurs kupna ";
+
+        title += "dla " + currencyCode;
+
+        currencyChart.setTitle(title);
+
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        for(int i = 0; i < dataXList.size(); ++i)
-        {
-            System.out.println(dataXList.get(i) + "  " + dataYList.get(i));
-        }
-
         initLineChart();
     }
 }

@@ -106,10 +106,10 @@ public class MainController implements Initializable{
         monthBox.setValue("Styczeń");
 
         Calendar now = Calendar.getInstance();
-        for(int i = 2002; i <= now.get(Calendar.YEAR); ++i)
+        for(int i = 2010; i <= now.get(Calendar.YEAR); ++i)
             yearBox.getItems().add(Integer.toString(i));
 
-        yearBox.setValue("2002");
+        yearBox.setValue("2010");
     }
 
      private RateType checkRateType(ComboBox box)
@@ -181,16 +181,15 @@ public class MainController implements Initializable{
                 } else {
                     int monthNumber = months.indexOf(monthBox.getValue()) + 1;
                     int year = Integer.parseInt(yearBox.getValue());
-                    if( !((now.get(Calendar.YEAR) == year) && (now.get(Calendar.MONTH) < monthNumber)))
+                    if( !((now.get(Calendar.YEAR) == year) && (now.get(Calendar.MONTH) + 1 < monthNumber) ))
                     {
                         try
                         {
                             FXMLLoader fxmlLoader = new FXMLLoader();
                             fxmlLoader.setLocation(getClass().getResource("ChartWindow.fxml"));
                             fxmlLoader.setController(new ChartController(year, monthNumber, parseXMLDocument, downloander, rateType, currency));
-                            Scene scene = new Scene((Parent) fxmlLoader.load(), 400, 400);
+                            Scene scene = new Scene((Parent) fxmlLoader.load(), 1100, 500);
                             Stage stage = new Stage();
-                            stage.setResizable(false);
                             stage.setTitle("Chart Window");
                             stage.setScene(scene);
                             stage.show();

@@ -39,6 +39,8 @@ public class DownloadXML {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Internet connection required ! ", ButtonType.YES);
             alert.showAndWait();
 
+            e.printStackTrace();
+
             if (alert.getResult() == ButtonType.YES) {
                 exit(1);
             }
