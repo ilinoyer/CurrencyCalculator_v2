@@ -5,10 +5,17 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable{
@@ -17,6 +24,7 @@ public class MainController implements Initializable{
     private ParseXMLDocument parseXMLDocument;
     private DownloadXML downloander;
     private Calculations calculations;
+    private ArrayList<String> months = new ArrayList<>();
 
     @FXML
     private TabPane tabPane;
@@ -46,6 +54,12 @@ public class MainController implements Initializable{
     private ComboBox<String> rateTypeBox;
 
     @FXML
+    private ComboBox<String> monthBox;
+
+    @FXML
+    private ComboBox<String> yearBox;
+
+    @FXML
     private ListView<Currency> overviewList;
     private ObservableList<Currency> currencyObservableList = FXCollections.observableArrayList();
 
@@ -60,6 +74,7 @@ public class MainController implements Initializable{
         parseXMLDocument.AddPurchuaseAndSellCourse();
         currencyCollection.addElementToCollection(new Currency("polski złoty", 1, "PLN", 1,1,1));
         calculations = new Calculations(currencyCollection);
+        months.addAll(Arrays.asList("Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"));
     }
 
     private void initOverview()
@@ -86,13 +101,22 @@ public class MainController implements Initializable{
 
         rateTypeBox.getItems().addAll("Kurs średni", "Kurs kupna", "Kurs sprzedaży");
         rateTypeBox.setValue("Kurs średni");
-        }
 
-     private RateType checkRateType()
+        monthBox.getItems().addAll(months);
+        monthBox.setValue("Styczeń");
+
+        Calendar now = Calendar.getInstance();
+        for(int i = 2002; i <= now.get(Calendar.YEAR); ++i)
+            yearBox.getItems().add(Integer.toString(i));
+
+        yearBox.setValue("2002");
+    }
+
+     private RateType checkRateType(ComboBox box)
      {
-         if(calculateByBox.getValue().equals("Kurs średni"))
+         if(box.getValue().equals("Kurs średni"))
              return RateType.AVERAGE_RATE;
-         else if(calculateByBox.getValue().equals("Kurs kupna"))
+         else if(box.getValue().equals("Kurs kupna"))
              return RateType.PURCHASE_RATE;
          else
              return RateType.SELL_RATE;
@@ -108,7 +132,7 @@ public class MainController implements Initializable{
             @Override
             public void handle(ActionEvent event) {
                 Double result = 0.0;
-                RateType rateType = checkRateType();
+                RateType rateType = checkRateType(calculateByBox);
                 String currencyFrom = calculateFromBox.getValue().substring(0, 3);
                 String currencyTo = calculateToBox.getValue().substring(0, 3);
                 if (currencyCollection.getCurrencyElementByCode(currencyFrom).getRate(rateType) == 0 || currencyCollection.getCurrencyElementByCode(currencyTo).getRate(rateType) == 0) {
@@ -137,6 +161,47 @@ public class MainController implements Initializable{
                             alert.close();
                         }
                     }
+                }
+            }
+        });
+
+        genarateChartButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Calendar now = Calendar.getInstance();
+                RateType rateType = checkRateType(rateTypeBox);
+                String currency = currencyBox.getValue().substring(0,3);
+                if ( currencyCollection.getCurrencyElementByCode(currency).getRate(rateType) == 0 ) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Brak dostępnego kursu dla tej waluty. Sprawdź dostępne kursy w zakładce: Przegląd ", ButtonType.OK);
+                    alert.showAndWait();
+
+                    if (alert.getResult() == ButtonType.OK) {
+                        alert.close();
+                    }
+                } else {
+                    int monthNumber = months.indexOf(monthBox.getValue()) + 1;
+                    int year = Integer.parseInt(yearBox.getValue());
+                    if( !((now.get(Calendar.YEAR) == year) && (now.get(Calendar.MONTH) < monthNumber)))
+                    {
+                        try
+                        {
+                            FXMLLoader fxmlLoader = new FXMLLoader();
+                            fxmlLoader.setLocation(getClass().getResource("ChartWindow.fxml"));
+                            fxmlLoader.setController(new ChartController());
+                            Scene scene = new Scene((Parent) fxmlLoader.load(), 400, 400);
+                            Stage stage = new Stage();
+                            stage.setResizable(false);
+                            stage.setTitle("Chart Window");
+                            stage.setScene(scene);
+                            stage.show();
+
+                        }catch(Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+
+                    }
+
                 }
             }
         });

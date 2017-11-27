@@ -3,6 +3,8 @@ package sample;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
+import java.util.ArrayList;
+
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
@@ -77,5 +79,37 @@ public class ParseXMLDocument{
 
     public void setXMLDoc(Document XMLDoc) {
         this.XMLDoc = XMLDoc;
+    }
+
+    public double collectDataToCharts(String currencyCode, RateType rateType )
+    {
+        NodeList codeNode = XMLDoc.getElementsByTagName("kod_waluty");
+        NodeList rateNode;
+        String code;
+        String temp;
+        double value = 0.0;
+
+        if(rateType == RateType.AVERAGE_RATE)
+            rateNode = XMLDoc.getElementsByTagName("kurs_sredni");
+        else if(rateType == RateType.SELL_RATE)
+            rateNode = XMLDoc.getElementsByTagName("kurs_kupna");
+        else
+            rateNode = XMLDoc.getElementsByTagName("kurs_sprzedazy");
+
+        for(int i = 0; i < codeNode.getLength(); ++i )
+        {
+
+            code = codeNode.item(i).getTextContent();
+
+            if( currencyCode.equals(code))
+            {
+                temp = rateNode.item(i).getTextContent();
+                temp = temp.replace(",", ".");
+                value = parseDouble(temp);
+            }
+
+        }
+
+        return value;
     }
 }
