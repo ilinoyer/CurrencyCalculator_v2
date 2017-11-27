@@ -187,7 +187,7 @@ public class MainController implements Initializable{
                         {
                             FXMLLoader fxmlLoader = new FXMLLoader();
                             fxmlLoader.setLocation(getClass().getResource("ChartWindow.fxml"));
-                            fxmlLoader.setController(new ChartController());
+                            fxmlLoader.setController(new ChartController(year, monthNumber, parseXMLDocument, downloander, rateType, currency));
                             Scene scene = new Scene((Parent) fxmlLoader.load(), 400, 400);
                             Stage stage = new Stage();
                             stage.setResizable(false);
