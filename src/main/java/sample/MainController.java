@@ -18,6 +18,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 
+import static sample.AlertBox.showAlert;
+
 public class MainController implements Initializable{
 
     private CurrencyCollection currencyCollection;
@@ -73,7 +75,7 @@ public class MainController implements Initializable{
         parseXMLDocument.setXMLDoc(downloander.GetXMLDocument());
         parseXMLDocument.AddPurchaseAndSellCourse();
         currencyCollection.addElementToCollection(new Currency("polski złoty", 1, "PLN", 1,1,1));
-        calculations = new Calculations(currencyCollection);
+        calculations = new Calculations();
         months.addAll(Arrays.asList("Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"));
     }
 
@@ -122,17 +124,6 @@ public class MainController implements Initializable{
              return RateType.SELL_RATE;
      }
 
-
-     private void showAlert(String alertMessage, Alert.AlertType alertType)
-     {
-         Alert alert = new Alert(alertType, alertMessage, ButtonType.OK);
-         alert.showAndWait();
-
-         if (alert.getResult() == ButtonType.OK) {
-             alert.close();
-         }
-     }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initOverview();
@@ -151,7 +142,7 @@ public class MainController implements Initializable{
 
                 } else {
                     try {
-                        result = calculations.calculateTransaction(currencyFrom, currencyTo, Double.parseDouble(amountField.getText()), rateType);
+                        result = calculations.calculateTransaction(currencyCollection.getCurrencyElementByCode(currencyFrom),currencyCollection.getCurrencyElementByCode(currencyTo), Double.parseDouble(amountField.getText()), rateType);
 
                         showAlert(amountField.getText() + " " + currencyFrom + "  =  " + result.toString() + " " + currencyTo, Alert.AlertType.NONE);
 

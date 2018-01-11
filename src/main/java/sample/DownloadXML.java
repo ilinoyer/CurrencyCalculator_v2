@@ -23,17 +23,6 @@ public class DownloadXML {
         this.urlAddress = urlAddress;
     }
 
-    private void showAlert(String alertMessage, Alert.AlertType alertType)
-    {
-        Alert alert = new Alert(alertType, alertMessage, ButtonType.OK);
-        alert.showAndWait();
-
-        if (alert.getResult() == ButtonType.OK) {
-            exit(1);
-        }
-    }
-
-
     public Document GetXMLDocument()
     {
         Document doc = null;
@@ -47,7 +36,7 @@ public class DownloadXML {
             doc = db.parse(is);
         }
         catch (Exception e) {
-            showAlert("Internet connection required ! ", Alert.AlertType.CONFIRMATION);
+            AlertBox.showAlert("Internet connection required ! ", Alert.AlertType.CONFIRMATION);
 
         }
         finally {
