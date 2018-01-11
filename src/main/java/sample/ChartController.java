@@ -5,12 +5,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-import static java.lang.Math.abs;
 import static java.util.Calendar.YEAR;
 
 public class ChartController implements Initializable{
@@ -55,14 +53,14 @@ public class ChartController implements Initializable{
 
     public void loadDir(int year)
     {
-        String addres;
+        String address;
         if(year != Calendar.getInstance().get(YEAR))
-            addres = "http://www.nbp.pl/kursy/xml/dir" + year + ".txt";
+            address = "http://www.nbp.pl/kursy/xml/dir" + year + ".txt";
         else
-            addres = "http://www.nbp.pl/kursy/xml/dir.txt";
+            address = "http://www.nbp.pl/kursy/xml/dir.txt";
 
         try {
-            URL url = new URL(addres);
+            URL url = new URL(address);
             Scanner s = new Scanner(url.openStream());
             while( s.hasNext() )
                 listOfFiles.add(s.nextLine());
@@ -82,14 +80,12 @@ public class ChartController implements Initializable{
         else
             tempMonth = "0" + Integer.toString(month);
 
-        System.out.println(tempYear + tempMonth);
-
         for(int i = 0; i < listOfFiles.size(); ++i)
         {
             if(rateType == RateType.AVERAGE_RATE && listOfFiles.get(i).contains("a") && listOfFiles.get(i).contains("z" + tempYear + tempMonth))
             {
 
-                downloadXML.setUrlAddres("http://www.nbp.pl/kursy/xml/" + listOfFiles.get(i) + ".xml");
+                downloadXML.setUrlAddress("http://www.nbp.pl/kursy/xml/" + listOfFiles.get(i) + ".xml");
                 parseXMLDocument.setXMLDoc(downloadXML.GetXMLDocument());
                 dataYList.add(parseXMLDocument.collectDataToCharts(currencyCode, rateType));
                 dataXList.add(Double.parseDouble(listOfFiles.get(i).substring(9,11)));
@@ -97,14 +93,10 @@ public class ChartController implements Initializable{
             }
             else if((rateType == RateType.PURCHASE_RATE || rateType == RateType.SELL_RATE) && listOfFiles.get(i).contains("c") && listOfFiles.get(i).contains("z" + tempYear + tempMonth))
             {
-                System.out.println("jeste");
-                System.out.println("http://www.nbp.pl/kursy/xml/" + listOfFiles.get(i) + ".xml");
-                downloadXML.setUrlAddres("http://www.nbp.pl/kursy/xml/" + listOfFiles.get(i) + ".xml");
+                downloadXML.setUrlAddress("http://www.nbp.pl/kursy/xml/" + listOfFiles.get(i) + ".xml");
                 parseXMLDocument.setXMLDoc(downloadXML.GetXMLDocument());
                 dataYList.add(parseXMLDocument.collectDataToCharts(currencyCode, rateType));
                 dataXList.add(Double.parseDouble(listOfFiles.get(i).substring(9,11)));
-                System.out.println(listOfFiles.get(i).substring(4,6) + "    http://www.nbp.pl/kursy/xml/" + listOfFiles.get(i) + ".xml");
-
             }
         }
     }

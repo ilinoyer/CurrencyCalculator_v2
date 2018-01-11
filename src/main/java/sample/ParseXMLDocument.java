@@ -49,7 +49,7 @@ public class ParseXMLDocument{
         }
     }
 
-    public void AddPurchuaseAndSellCourse()
+    public void AddPurchaseAndSellCourse()
     {
         String code;
         String temp;

@@ -16,12 +16,23 @@ import static java.lang.System.exit;
  * Created by sojer on 20.11.2017.
  */
 public class DownloadXML {
-    private String urlAddres;
+    private String urlAddress;
 
-    public DownloadXML(String urlAddres)
+    public DownloadXML(String urlAddress)
     {
-        this.urlAddres = urlAddres;
+        this.urlAddress = urlAddress;
     }
+
+    private void showAlert(String alertMessage, Alert.AlertType alertType)
+    {
+        Alert alert = new Alert(alertType, alertMessage, ButtonType.OK);
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.OK) {
+            exit(1);
+        }
+    }
+
 
     public Document GetXMLDocument()
     {
@@ -31,19 +42,13 @@ public class DownloadXML {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
-            URL url = new URL(urlAddres);
+            URL url = new URL(urlAddress);
             is = url.openStream();
             doc = db.parse(is);
         }
         catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Internet connection required ! ", ButtonType.YES);
-            alert.showAndWait();
+            showAlert("Internet connection required ! ", Alert.AlertType.CONFIRMATION);
 
-            e.printStackTrace();
-
-            if (alert.getResult() == ButtonType.YES) {
-                exit(1);
-            }
         }
         finally {
 
@@ -55,7 +60,7 @@ public class DownloadXML {
         return doc;
     }
 
-    public void setUrlAddres(String urlAddres) {
-        this.urlAddres = urlAddres;
+    public void setUrlAddress(String urlAddress) {
+        this.urlAddress = urlAddress;
     }
 }

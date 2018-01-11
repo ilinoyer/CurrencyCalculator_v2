@@ -10,10 +10,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainWindow.fxml"));
         Parent root = loader.load();
         primaryStage.setTitle("Currency Calculator");
-        root.getStylesheets().add(this.getClass().getResource("Style.css").toExternalForm());
+        root.getStylesheets().add(this.getClass().getResource("/Style.css").toExternalForm());
         final MainController maincontroller = loader.getController();
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.setMinHeight(400);

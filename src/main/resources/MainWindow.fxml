@@ -164,7 +164,7 @@
                               <Insets left="-75.0" />
                            </GridPane.margin>
                         </ComboBox>
-                        <Button fx:id="genarateChartButton" mnemonicParsing="false" text="Generuj" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                        <Button fx:id="generateChartButton" mnemonicParsing="false" text="Generuj" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                            <font>
                               <Font size="20.0" />
                            </font>

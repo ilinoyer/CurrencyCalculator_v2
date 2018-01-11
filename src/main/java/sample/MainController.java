@@ -45,7 +45,7 @@ public class MainController implements Initializable{
     private Button calculateButton;
 
     @FXML
-    private Button genarateChartButton;
+    private Button generateChartButton;
 
     @FXML
     private ComboBox<String> currencyBox;
@@ -69,9 +69,9 @@ public class MainController implements Initializable{
         downloander = new DownloadXML("https://www.nbp.pl/kursy/xml/lastA.xml");
         parseXMLDocument = new ParseXMLDocument(currencyCollection, downloander.GetXMLDocument());
         parseXMLDocument.CreateCurrencyCollection();
-        downloander.setUrlAddres("https://www.nbp.pl/kursy/xml/lastC.xml");
+        downloander.setUrlAddress("https://www.nbp.pl/kursy/xml/lastC.xml");
         parseXMLDocument.setXMLDoc(downloander.GetXMLDocument());
-        parseXMLDocument.AddPurchuaseAndSellCourse();
+        parseXMLDocument.AddPurchaseAndSellCourse();
         currencyCollection.addElementToCollection(new Currency("polski złoty", 1, "PLN", 1,1,1));
         calculations = new Calculations(currencyCollection);
         months.addAll(Arrays.asList("Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"));
@@ -123,6 +123,16 @@ public class MainController implements Initializable{
      }
 
 
+     private void showAlert(String alertMessage, Alert.AlertType alertType)
+     {
+         Alert alert = new Alert(alertType, alertMessage, ButtonType.OK);
+         alert.showAndWait();
+
+         if (alert.getResult() == ButtonType.OK) {
+             alert.close();
+         }
+     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initOverview();
@@ -136,48 +146,33 @@ public class MainController implements Initializable{
                 String currencyFrom = calculateFromBox.getValue().substring(0, 3);
                 String currencyTo = calculateToBox.getValue().substring(0, 3);
                 if (currencyCollection.getCurrencyElementByCode(currencyFrom).getRate(rateType) == 0 || currencyCollection.getCurrencyElementByCode(currencyTo).getRate(rateType) == 0) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Brak dostępnego typu kursu dla jednej z walut. Sprawdź dostępne kursy w zakładce: Przegląd ", ButtonType.OK);
-                    alert.showAndWait();
 
-                    if (alert.getResult() == ButtonType.OK) {
-                        alert.close();
-                    }
+                    showAlert("Course type error. Check the available courses in the tab: Overview", Alert.AlertType.ERROR);
+
                 } else {
                     try {
                         result = calculations.calculateTransaction(currencyFrom, currencyTo, Double.parseDouble(amountField.getText()), rateType);
 
-                        Alert alert = new Alert(Alert.AlertType.NONE, amountField.getText() + " " + currencyFrom + "  =  " + result.toString() + " " + currencyTo, ButtonType.OK);
-                        alert.showAndWait();
-
-                        if (alert.getResult() == ButtonType.OK) {
-                            alert.close();
-                        }
+                        showAlert(amountField.getText() + " " + currencyFrom + "  =  " + result.toString() + " " + currencyTo, Alert.AlertType.NONE);
 
                     } catch (Exception e) {
-                        Alert alert = new Alert(Alert.AlertType.ERROR, "Wprowadz poprawną kwotę. ", ButtonType.OK);
-                        alert.showAndWait();
 
-                        if (alert.getResult() == ButtonType.OK) {
-                            alert.close();
-                        }
+                        showAlert("Enter valid amount.", Alert.AlertType.ERROR);
                     }
                 }
+
             }
         });
 
-        genarateChartButton.setOnAction(new EventHandler<ActionEvent>() {
+        generateChartButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Calendar now = Calendar.getInstance();
                 RateType rateType = checkRateType(rateTypeBox);
                 String currency = currencyBox.getValue().substring(0,3);
                 if ( currencyCollection.getCurrencyElementByCode(currency).getRate(rateType) == 0 ) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Brak dostępnego kursu dla tej waluty. Sprawdź dostępne kursy w zakładce: Przegląd ", ButtonType.OK);
-                    alert.showAndWait();
+                    showAlert("Course type error. Check the available courses in the tab: Overview", Alert.AlertType.ERROR);
 
-                    if (alert.getResult() == ButtonType.OK) {
-                        alert.close();
-                    }
                 } else {
                     int monthNumber = months.indexOf(monthBox.getValue()) + 1;
                     int year = Integer.parseInt(yearBox.getValue());
@@ -186,7 +181,7 @@ public class MainController implements Initializable{
                         try
                         {
                             FXMLLoader fxmlLoader = new FXMLLoader();
-                            fxmlLoader.setLocation(getClass().getResource("ChartWindow.fxml"));
+                            fxmlLoader.setLocation(getClass().getResource("/ChartWindow.fxml"));
                             fxmlLoader.setController(new ChartController(year, monthNumber, parseXMLDocument, downloander, rateType, currency));
                             Scene scene = new Scene((Parent) fxmlLoader.load(), 1100, 500);
                             Stage stage = new Stage();
