@@ -4,7 +4,6 @@ import sample.Currency;
 import sample.RateType;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.*;
 
 public class CurrencyTest {

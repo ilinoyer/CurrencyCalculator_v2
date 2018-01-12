@@ -70,10 +70,10 @@ public class MainController implements Initializable{
         currencyCollection = new CurrencyCollection();
         downloander = new DownloadXML("https://www.nbp.pl/kursy/xml/lastA.xml");
         parseXMLDocument = new ParseXMLDocument(currencyCollection, downloander.GetXMLDocument());
-        parseXMLDocument.CreateCurrencyCollection();
+        parseXMLDocument.createCurrencyCollection();
         downloander.setUrlAddress("https://www.nbp.pl/kursy/xml/lastC.xml");
         parseXMLDocument.setXMLDoc(downloander.GetXMLDocument());
-        parseXMLDocument.AddPurchaseAndSellCourse();
+        parseXMLDocument.addPurchaseAndSellCourse();
         currencyCollection.addElementToCollection(new Currency("polski złoty", 1, "PLN", 1,1,1));
         calculations = new Calculations();
         months.addAll(Arrays.asList("Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"));

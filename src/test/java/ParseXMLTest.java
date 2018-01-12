@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 
 public class ParseXMLTest {
@@ -43,7 +42,7 @@ public class ParseXMLTest {
     public void averageXMLParseTest()
     {
         ParseXMLDocument parseXMLDocument = new ParseXMLDocument(currencyCollection,averageXML);
-        parseXMLDocument.CreateCurrencyCollection();
+        parseXMLDocument.createCurrencyCollection();
         assertThat(2,is(currencyCollection.getCollectionSize()));
     }
 
@@ -51,9 +50,9 @@ public class ParseXMLTest {
     public void addPurchaseAndSellCourseTest()
     {
         ParseXMLDocument parseXMLDocument = new ParseXMLDocument(currencyCollection,averageXML);
-        parseXMLDocument.CreateCurrencyCollection();
+        parseXMLDocument.createCurrencyCollection();
         parseXMLDocument.setXMLDoc(purchaseSellXML);
-        parseXMLDocument.AddPurchaseAndSellCourse();
+        parseXMLDocument.addPurchaseAndSellCourse();
         assertThat(currencyCollection.getCollectionElementByPosition(0).getSellRate(),is(3.4998));
     }
 

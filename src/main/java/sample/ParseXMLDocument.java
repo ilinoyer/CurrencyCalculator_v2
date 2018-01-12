@@ -22,7 +22,7 @@ public class ParseXMLDocument{
         this.XMLDoc = XMLDoc;
     }
 
-    public void CreateCurrencyCollection()
+    public void createCurrencyCollection()
     {
         String currencyName;
         int converter;
@@ -49,7 +49,7 @@ public class ParseXMLDocument{
         }
     }
 
-    public void AddPurchaseAndSellCourse()
+    public void addPurchaseAndSellCourse()
     {
         String code;
         String temp;
