@@ -1,0 +1,16 @@
+<tabela_kursow typ="A" uid="18a009">
+    <numer_tabeli>009/A/NBP/2018</numer_tabeli>
+    <data_publikacji>2018-01-12</data_publikacji>
+    <pozycja>
+        <nazwa_waluty>dolar amerykański</nazwa_waluty>
+        <przelicznik>1</przelicznik>
+        <kod_waluty>USD</kod_waluty>
+        <kurs_sredni>3,4366</kurs_sredni>
+    </pozycja>
+    <pozycja>
+        <nazwa_waluty>dolar australijski</nazwa_waluty>
+        <przelicznik>1</przelicznik>
+        <kod_waluty>AUD</kod_waluty>
+        <kurs_sredni>2,7071</kurs_sredni>
+    </pozycja>
+</tabela_kursow>

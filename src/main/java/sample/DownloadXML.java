@@ -9,6 +9,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.net.UnknownHostException;
 
 import static java.lang.System.exit;
 
@@ -17,10 +18,16 @@ import static java.lang.System.exit;
  */
 public class DownloadXML {
     private String urlAddress;
+    private URL url;
 
     public DownloadXML(String urlAddress)
     {
         this.urlAddress = urlAddress;
+        try{
+            this.url = new URL(urlAddress);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public Document GetXMLDocument()
@@ -31,13 +38,11 @@ public class DownloadXML {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
-            URL url = new URL(urlAddress);
             is = url.openStream();
             doc = db.parse(is);
         }
         catch (Exception e) {
-            AlertBox.showAlert("Internet connection required ! ", Alert.AlertType.CONFIRMATION);
-
+            AlertBox.showAlertAndExit("Internet connection required ! ", Alert.AlertType.CONFIRMATION);
         }
         finally {
 
@@ -51,5 +56,10 @@ public class DownloadXML {
 
     public void setUrlAddress(String urlAddress) {
         this.urlAddress = urlAddress;
+    }
+
+    public void setUrl(URL url)
+    {
+        this.url = url;
     }
 }

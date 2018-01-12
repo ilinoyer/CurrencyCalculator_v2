@@ -1,0 +1,19 @@
+<tabela_kursow typ="C" uid="18c009">
+    <numer_tabeli>009/C/NBP/2018</numer_tabeli>
+    <data_notowania>2018-01-11</data_notowania>
+    <data_publikacji>2018-01-12</data_publikacji>
+    <pozycja>
+        <nazwa_waluty>dolar amerykański</nazwa_waluty>
+        <przelicznik>1</przelicznik>
+        <kod_waluty>USD</kod_waluty>
+        <kurs_kupna>3,4304</kurs_kupna>
+        <kurs_sprzedazy>3,4998</kurs_sprzedazy>
+    </pozycja>
+    <pozycja>
+        <nazwa_waluty>dolar australijski</nazwa_waluty>
+        <przelicznik>1</przelicznik>
+        <kod_waluty>AUD</kod_waluty>
+        <kurs_kupna>2,7040</kurs_kupna>
+        <kurs_sprzedazy>2,7586</kurs_sprzedazy>
+    </pozycja>
+</tabela_kursow>

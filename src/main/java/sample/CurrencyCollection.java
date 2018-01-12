@@ -60,4 +60,9 @@ public class CurrencyCollection {
     public ArrayList<Currency> getCurrencyList() {
         return currencyList;
     }
+
+    public void removeElementFromCollection(Currency removeElem)
+    {
+        currencyList.remove(removeElem);
+    }
 }

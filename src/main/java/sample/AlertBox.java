@@ -12,6 +12,16 @@ public class AlertBox {
         alert.showAndWait();
 
         if (alert.getResult() == ButtonType.OK) {
+            alert.close();
+        }
+    }
+
+    public static void showAlertAndExit(String alertMessage, Alert.AlertType alertType)
+    {
+        Alert alert = new Alert(alertType, alertMessage, ButtonType.OK);
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.OK) {
             exit(1);
         }
     }

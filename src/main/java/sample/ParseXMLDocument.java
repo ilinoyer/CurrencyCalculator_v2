@@ -92,9 +92,9 @@ public class ParseXMLDocument{
         if(rateType == RateType.AVERAGE_RATE)
             rateNode = XMLDoc.getElementsByTagName("kurs_sredni");
         else if(rateType == RateType.SELL_RATE)
-            rateNode = XMLDoc.getElementsByTagName("kurs_kupna");
-        else
             rateNode = XMLDoc.getElementsByTagName("kurs_sprzedazy");
+        else
+            rateNode = XMLDoc.getElementsByTagName("kurs_kupna");
 
         for(int i = 0; i < codeNode.getLength(); ++i )
         {

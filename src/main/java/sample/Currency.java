@@ -11,6 +11,7 @@ public class Currency {
     private double purchaseRate;
     private double sellRate;
 
+    public Currency(){}
 
     public Currency(String currencyName, int converter, String code, double rateOfExchange) {
         this.currencyName = currencyName;

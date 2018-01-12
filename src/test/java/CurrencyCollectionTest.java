@@ -10,14 +10,25 @@ import static org.hamcrest.CoreMatchers.*;
  */
 public class CurrencyCollectionTest {
 
+
     @Test
-    public void CreatingCurrencyCollectionObject()
+    public void creatingObjectTest()
     {
         CurrencyCollection collection = new CurrencyCollection();
+        assertThat(collection.getCurrencyList(),not(nullValue()));
     }
 
     @Test
-    public void AddingElementToCollectionTest()
+    public void gettingSizeOfCollectionTest()
+    {
+        CurrencyCollection collection  = new CurrencyCollection();
+        collection.addElementToCollection(new Currency());
+        collection.addElementToCollection(new Currency());
+        assertThat(2, is(collection.getCollectionSize()));
+    }
+
+    @Test
+    public void addingElementToCollectionTest()
     {
         CurrencyCollection collection = new CurrencyCollection();
         collection.addElementToCollection(new Currency("Złoty", 1, "PLN", 0.50));
@@ -25,7 +36,17 @@ public class CurrencyCollectionTest {
     }
 
     @Test
-    public void GettingElementByCode()
+    public void removingElementFromCollectionTest()
+    {
+        Currency currency = new Currency();
+        CurrencyCollection collection = new CurrencyCollection();
+        collection.addElementToCollection(currency);
+        collection.removeElementFromCollection(currency);
+        assertThat(collection.getCollectionSize(), is(0));
+    }
+
+    @Test
+    public void gettingElementByCodeTest()
     {
         CurrencyCollection collection = new CurrencyCollection();
         collection.addElementToCollection(new Currency("Złoty", 1, "PLN", 0.50));
@@ -33,7 +54,7 @@ public class CurrencyCollectionTest {
     }
 
     @Test
-    public void GettingEmentByPosition()
+    public void gettingElementByPositionTest()
     {
         CurrencyCollection collection = new CurrencyCollection();
         Currency currency = new Currency("Złoty", 1, "PLN", 0.50);
